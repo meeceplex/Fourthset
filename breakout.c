@@ -77,7 +77,6 @@ int main(void)
     // keep playing until game over
     while (lives > 0 && bricks > 0)
     {
-        // TODO
         // check for mouse movement
         GEvent event = getNextEvent(MOUSE_EVENT);
         
@@ -109,6 +108,25 @@ int main(void)
 void initBricks(GWindow window)
 {
     // TODO
+
+    double row = (getHeight(window) / 11); // row y starting coordinate
+    
+    for(int i = 0; i < 5; i++)
+    {
+        double width = (getWidth(window) - (11 * 4)) / 10; // brick width
+        double height = 10; // brick height
+        double gapX = 4;    // horizontal gap x starting coordinate
+        double gapY = 4;    // vertical gap y staring coordinate
+        for(int j = 0; j < 10; j++)
+        {
+            GRect brick = newGRect(gapX, row, width, height);
+            gapX = (getX(brick) + width + 4);
+            setFilled(brick, true);
+            setColor(brick, "RED");
+            add(window, brick);
+        }
+        row = row + height + gapY;
+    }
 }
 
 /**
