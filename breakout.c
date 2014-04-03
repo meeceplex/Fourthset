@@ -73,6 +73,9 @@ int main(void)
 
     // number of points initially
     int points = 0;
+    
+    // velocity of ball movement
+    double velocity = 2.0;
 
     // keep playing until game over
     while (lives > 0 && bricks > 0)
@@ -92,6 +95,19 @@ int main(void)
                 setLocation(paddle, x, y);
             }
         }
+        
+        // ball movement
+        move(ball, -velocity, 0);
+        
+        if(getX(ball) + getWidth(ball) >= getWidth(window))
+        {
+            velocity = -velocity;
+        }
+        else if(getX(ball) <= 0)
+        {
+            velocity = -velocity;
+        }
+        pause(10);
     }
 
     // wait for click before exiting
