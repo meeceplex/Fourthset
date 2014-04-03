@@ -106,8 +106,18 @@ GOval initBall(GWindow window)
  */
 GRect initPaddle(GWindow window)
 {
-    // TODO
-    return NULL;
+    // Instantiate paddle.gi
+    GRect paddle = newGRect(0, 0, 60, 10);
+    setFilled(paddle, true);
+    setColor(paddle, "BLACK");
+    add(window, paddle);
+    
+    // Set paddle location to bottom center
+    double x = (getWidth(window) - getWidth(paddle)) / 2;
+    double y = (getHeight(window)) - ((getHeight(window) - getHeight(paddle)) / 10);
+    setLocation(paddle, x, y);
+    
+    return paddle;
 }
 
 /**
