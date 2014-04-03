@@ -143,8 +143,17 @@ void initBricks(GWindow window)
  */
 GOval initBall(GWindow window)
 {
-    // TODO
-    return NULL;
+    // instantiate ball
+    GOval ball = newGOval(0, 0, 20, 20);
+    add(window, ball);
+    setFilled(ball, true);
+    setColor(ball, "Black");
+    
+    // set location to center
+    double x = ((getWidth(window) - getWidth(ball)) / 2);
+    double y = ((getHeight(window) - getHeight(ball)) / 2);
+    setLocation(ball, x, y);
+    return ball;
 }
 
 /**
