@@ -21,6 +21,10 @@
 #define HEIGHT 600
 #define WIDTH 400
 
+// height and width of paddle
+#define BHEIGHT 10
+#define BWIDTH 60
+
 // number of rows of bricks
 #define ROWS 5
 
@@ -74,6 +78,21 @@ int main(void)
     while (lives > 0 && bricks > 0)
     {
         // TODO
+        // check for mouse movement
+        GEvent event = getNextEvent(MOUSE_EVENT);
+        
+        // if there is an event
+        if(event != NULL)
+        {
+            // if event is movement
+            if(getEventType(event) == MOUSE_MOVED)
+            {
+                // move paddle along x axis with cursor
+                double x = getX(event) - getWidth(paddle) / 2;
+                double y = getY(paddle);
+                setLocation(paddle, x, y);
+            }
+        }
     }
 
     // wait for click before exiting
@@ -107,7 +126,7 @@ GOval initBall(GWindow window)
 GRect initPaddle(GWindow window)
 {
     // Instantiate paddle.gi
-    GRect paddle = newGRect(0, 0, 60, 10);
+    GRect paddle = newGRect(0, 0, BWIDTH, BHEIGHT);
     setFilled(paddle, true);
     setColor(paddle, "BLACK");
     add(window, paddle);
