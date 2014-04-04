@@ -80,6 +80,7 @@ int main(void)
     velocityX = drand48();
     double velocityY = 2.0;
     
+    waitForClick();
     // keep playing until game over
     while (lives > 0 && bricks > 0)
     {
@@ -101,7 +102,7 @@ int main(void)
         
         // ball movement
         move(ball, velocityX, velocityY);
-        pause(10);
+        pause(8);
         if(getX(ball) + getWidth(ball) >= getWidth(window))
         {
             velocityX = -velocityX;
@@ -116,7 +117,16 @@ int main(void)
         }
         else if(getY(ball) + getHeight(ball) >= getHeight(window))
         {
-            velocityY = -velocityY;
+            lives--;
+            double x = ((getWidth(window) - getWidth(ball)) / 2);
+            double y = ((getHeight(window) - getHeight(ball)) / 2);
+            setLocation(ball, x, y);
+            
+            x = (getWidth(window) - getWidth(paddle)) / 2;
+            y = (getHeight(window)) - ((getHeight(window) - getHeight(paddle)) / 10);
+            setLocation(paddle, x, y);
+            
+            waitForClick();
         }
         
         // detect collisions
@@ -128,6 +138,7 @@ int main(void)
             if(object != paddle)
             {
                 removeGWindow(window, object);
+                bricks--;
             }
         }
         
