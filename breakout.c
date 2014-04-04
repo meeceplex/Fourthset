@@ -75,8 +75,11 @@ int main(void)
     int points = 0;
     
     // velocity of ball movement
-    double velocity = 2.0;
-
+    double velocityX;
+    double drand48(void);
+    velocityX = drand48();
+    double velocityY = 2.0;
+    
     // keep playing until game over
     while (lives > 0 && bricks > 0)
     {
@@ -97,17 +100,37 @@ int main(void)
         }
         
         // ball movement
-        move(ball, -velocity, 0);
-        
+        move(ball, velocityX, velocityY);
+        pause(10);
         if(getX(ball) + getWidth(ball) >= getWidth(window))
         {
-            velocity = -velocity;
+            velocityX = -velocityX;
         }
         else if(getX(ball) <= 0)
         {
-            velocity = -velocity;
+            velocityX = -velocityX;
         }
-        pause(10);
+        else if(getY(ball) <= 0)
+        {
+            velocityY = -velocityY;
+        }
+        else if(getY(ball) + getHeight(ball) >= getHeight(window))
+        {
+            velocityY = -velocityY;
+        }
+        
+        // detect collisions
+        GObject object = detectCollision(window, ball);
+        
+        if((object != NULL) && (strcmp(getType(object), "GRect") == 0))
+        {
+            velocityY = -velocityY;
+            if(object != paddle)
+            {
+                removeGWindow(window, object);
+            }
+        }
+        
     }
 
     // wait for click before exiting
@@ -124,7 +147,6 @@ int main(void)
 void initBricks(GWindow window)
 {
     // generate table of bricks with colored rows
-
     double row = (getHeight(window) / 11); // row y starting coordinate
     
     for(int i = 0; i < 5; i++)
