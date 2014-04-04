@@ -102,7 +102,7 @@ int main(void)
         
         // ball movement
         move(ball, velocityX, velocityY);
-        pause(8);
+        pause(4);
         if(getX(ball) + getWidth(ball) >= getWidth(window))
         {
             velocityX = -velocityX;
@@ -139,9 +139,10 @@ int main(void)
             {
                 removeGWindow(window, object);
                 bricks--;
+                points++;
+                updateScoreboard(window, label, points);
             }
         }
-        
     }
 
     // wait for click before exiting
@@ -229,8 +230,15 @@ GRect initPaddle(GWindow window)
  */
 GLabel initScoreboard(GWindow window)
 {
-    // TODO
-    return NULL;
+    // create label for keeping score.
+    GLabel label = newGLabel("0");
+    setFont(label, "SansSerif-38");
+    setColor(label, "ORANGE");
+    double x = (getWidth(window) - getWidth(label)) / 2;
+    double y = (getHeight(window) - getHeight(label)) / 2;
+    setLocation(label, x, y);
+    add(window, label);
+    return label;
 }
 
 /**
